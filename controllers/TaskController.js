@@ -1,7 +1,7 @@
 const Task = require('../models/Task');
 
 // Create Task
-module.exports.register = async (request, response) => {
+module.exports.registerTask = async (request, response) => {
     let data = request.body;
 
     try {
@@ -88,7 +88,40 @@ module.exports.updateTask = async (request, response) => {
         console.error('Error in updating task:', error);
         response.status(500).json({ error: 'Internal Server Error' });
     }
-}
+};
+
+// Archive Task
+module.exports.archiveTask = async (request, response) => {
+  try {
+      const taskId = request.params.id; // Extracting _id from the request URL parameter
+
+      // Set the update details to change isActive to false
+      const updateDetails = { isActive: false };
+
+      // Find the task by _id and update its isActive status
+      const updatedTask = await Task.findByIdAndUpdate(
+          taskId, // MongoDB _id of the task
+          updateDetails, // Update isActive to false
+          { new: true } // Option to return the modified document
+      );
+
+      // Check if the task was found and updated
+      if (!updatedTask) {
+          return response.status(404).json({ message: 'Task not found' });
+      }
+
+      // Respond with the updated task
+      response.status(200).json({
+          message: 'Task successfully archived!',
+          task: updatedTask
+      });
+
+  } catch (error) {
+      console.error('Error in archiving task:', error);
+      response.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 
 
