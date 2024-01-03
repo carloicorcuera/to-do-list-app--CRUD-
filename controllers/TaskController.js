@@ -62,9 +62,17 @@ module.exports.getTasks = async (request, response) => {
 // Update Task
 module.exports.updateTask = async (request, response) => {
     try {
+
+        const { title, subtitle, task } = request.body;
+
         // Extract _id and update details from request
         const taskId = request.params.id; // assuming _id is passed as URL parameter
         const updateDetails = request.body; // the details to update
+
+        // Check for required fields
+        if (!title || !subtitle || !task) {
+            return response.status(400).json({ error: "Invalid input data, missing title, subtitle, or task" });
+        };
 
         // Find the task by _id and update it
         const updatedTask = await Task.findByIdAndUpdate(

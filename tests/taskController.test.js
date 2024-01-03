@@ -52,6 +52,17 @@ describe("GET /tasks/all", () => {
         });
       });
 
+      it("should handle server errors gracefully", async () => {
+        // Mock Task.find to throw an error
+        jest.spyOn(Task, 'find').mockImplementationOnce(() => {
+          throw new Error("Fake server error");
+        });
+    
+        const res = await request(app).get("/tasks/all");
+        expect(res.statusCode).toBe(500);
+        expect(res.body).toHaveProperty('error', 'Internal Server Error');
+      });
+
 });
 
 describe("POST /tasks/create-task", () => {
@@ -59,9 +70,9 @@ describe("POST /tasks/create-task", () => {
     it("should successfully register a new task", async () => {
       // Mock request data for a new task
       const newTaskData = {
-        title: "Unique Task Title",
-        subtitle: "Task Subtitle",
-        task: "Task description"
+        title: "Unique1 Task Title",
+        subtitle: "Unique1 Task Subtitle",
+        task: "Unique1 Task description"
         // Include other necessary fields
       };
   
@@ -113,4 +124,102 @@ describe("POST /tasks/create-task", () => {
     });
   
 });
+
+describe("PATCH /tasks/update/:id", () => {
+
+    it("should successfully update an existing task", async () => {
+      // Assume validTaskId is an ID of an existing task
+      const validTaskId = '6594d1446bdc71fb24999db4';
+      const updateData = {
+        title: "200 Updated Task Title",
+        subtitle: "200 Updated Task Title",
+        task: "200 Updated Task Title",
+      };
+  
+      const res = await request(app).patch(`/tasks/update/${validTaskId}`).send(updateData);
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('message', 'Task successfully updated!');
+      expect(res.body.task).toMatchObject(updateData); // Checks if the task contains the update
+    });
+  
+    it("should return 404 when task is not found", async () => {
+      const nonExistentTaskId = '6594d1446bdc71fb24999db1';
+      const updateData = {
+        title: "404 Updated Task Title",
+        subtitle: "404 Updated Task Title",
+        task: "404 Updated Task Title",
+      };
+  
+      const res = await request(app).patch(`/tasks/update/${nonExistentTaskId}`).send(updateData);
+      expect(res.statusCode).toBe(404);
+      expect(res.body).toHaveProperty('message', 'Task not found');
+    });
+  
+    it("should handle invalid update data", async () => {
+      // Assuming empty or invalid data structure is not allowed
+      const invalidUpdateData = {};
+  
+      // Assume validTaskId is an ID of an existing task
+      const validTaskId = '6594d1446bdc71fb24999db4';
+  
+      const res = await request(app).patch(`/tasks/update/${validTaskId}`).send(invalidUpdateData);
+      // The expected status code might vary based on your implementation (could be 400 or another code)
+      expect(res.statusCode).toBe(400); 
+      expect(res.body).toHaveProperty('error', 'Invalid input data, missing title, subtitle, or task');
+    });
+  
+    it("should handle server errors gracefully", async () => {
+      // Mock Task.findByIdAndUpdate to throw an error
+      jest.spyOn(Task, 'findByIdAndUpdate').mockImplementationOnce(() => {
+        throw new Error("Fake server error");
+      });
+  
+      const taskId = '6594d1446bdc71fb24999db4';
+      const updateData = {
+        title: "500 Updated Task Title",
+        subtitle: "500 Updated Task Title",
+        task: "500 Updated Task Title",
+      };
+  
+      const res = await request(app).patch(`/tasks/update/${taskId}`).send(updateData);
+      expect(res.statusCode).toBe(500);
+      expect(res.body).toHaveProperty('error', 'Internal Server Error');
+    });
+  
+});
+
+describe("DELETE /delete/:id", () => {
+
+    it("should successfully archive an existing task", async () => {
+      // Assume validTaskId is an ID of an existing task
+      const validTaskId = '6594d198669936b8acfc2ab3';
+  
+      const res = await request(app).delete(`/tasks/delete/${validTaskId}`);
+      expect(res.statusCode).toBe(200);
+      expect(res.body).toHaveProperty('message', 'Task successfully archived!');
+      expect(res.body.task.isActive).toBe(false); // Verify the task is archived
+    });
+  
+    it("should return 404 when task is not found", async () => {
+      const nonExistentTaskId = '6594d198669936b8acfc2ab1';
+  
+      const res = await request(app).delete(`/tasks/delete/${nonExistentTaskId}`);
+      expect(res.statusCode).toBe(404);
+      expect(res.body).toHaveProperty('message', 'Task not found');
+    });
+  
+    it("should handle server errors gracefully", async () => {
+      // Mock Task.findByIdAndUpdate to throw an error
+      jest.spyOn(Task, 'findByIdAndUpdate').mockImplementationOnce(() => {
+        throw new Error("Fake server error");
+      });
+  
+      const taskId = '6594d198669936b8acfc2ab3';
+  
+      const res = await request(app).delete(`/tasks/delete/${taskId}`);
+      expect(res.statusCode).toBe(500);
+      expect(res.body).toHaveProperty('error', 'Internal Server Error');
+    });
+  
+  });
   
