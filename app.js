@@ -27,3 +27,5 @@ app.use('/tasks', taskRoutes)
 app.listen(port, () => {
 	console.log(`API is now running on localhost: ${port}`);
 });
+
+module.exports = app;

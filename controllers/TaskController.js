@@ -2,12 +2,12 @@ const Task = require('../models/Task');
 
 // Create Task
 module.exports.registerTask = async (request, response) => {
-    let data = request.body;
+    const { title, subtitle, task } = request.body;
 
     try {
-        if (request.body == null) {
-          return response.status(400).json({ error: "Invalid task" });
-        }
+      if (!title || !subtitle || !task) {
+        return response.status(400).json({ error: "Request is Empty" });
+      }
     
         // Check if email already exists in the database
         const existingTitle = await Task.findOne({ title: request.body.title });
