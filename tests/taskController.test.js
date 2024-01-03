@@ -56,43 +56,43 @@ describe("GET /tasks/all", () => {
 
 describe("POST /tasks/create-task", () => {
 
-    // it("should successfully register a new task", async () => {
-    //   // Mock request data for a new task
-    //   const newTaskData = {
-    //     title: "Unique Task Title",
-    //     subtitle: "Task Subtitle",
-    //     task: "Task description"
-    //     // Include other necessary fields
-    //   };
+    it("should successfully register a new task", async () => {
+      // Mock request data for a new task
+      const newTaskData = {
+        title: "Unique Task Title",
+        subtitle: "Task Subtitle",
+        task: "Task description"
+        // Include other necessary fields
+      };
   
-    //   const res = await request(app).post("/tasks/create-task").send(newTaskData);
-    //   expect(res.statusCode).toBe(201);
-    //   expect(res.body).toHaveProperty('message', 'Task successfully registered!');
-    //   expect(res.body).toHaveProperty('userId'); // Assuming userId is actually taskId
-    // });
+      const res = await request(app).post("/tasks/create-task").send(newTaskData);
+      expect(res.statusCode).toBe(201);
+      expect(res.body).toHaveProperty('message', 'Task successfully registered!');
+      expect(res.body).toHaveProperty('userId'); // Assuming userId is actually taskId
+    });
   
-    // it("should return 400 for invalid task data", async () => {
-    //   const invalidData = {}; // Empty data or structure incorrect data as per requirements
+    it("should return 400 for invalid task data", async () => {
+      const invalidData = {}; // Empty data or structure incorrect data as per requirements
   
-    //   const res = await request(app).post("/tasks/create-task").send(invalidData);
-    //   expect(res.statusCode).toBe(400);
-    //   expect(res.body).toHaveProperty('error', 'Request is Empty');
-    // });
+      const res = await request(app).post("/tasks/create-task").send(invalidData);
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('error', 'Request is Empty');
+    });
   
-    // it("should prevent duplicate task titles", async () => {
-    //   // Assuming a task with title "Duplicate Title" already exists in the database
+    it("should prevent duplicate task titles", async () => {
+      // Assuming a task with title "Duplicate Title" already exists in the database
   
-    //   const duplicateTaskData = {
-    //     title: "Unique Task Title",
-    //     subtitle: "Task Subtitle",
-    //     task: "Task description"
-    //     // Include other necessary fields
-    //   };
+      const duplicateTaskData = {
+        title: "Unique Task Title",
+        subtitle: "Task Subtitle",
+        task: "Task description"
+        // Include other necessary fields
+      };
   
-    //   const res = await request(app).post("/tasks/create-task").send(duplicateTaskData);
-    //   expect(res.statusCode).toBe(400);
-    //   expect(res.body).toHaveProperty('message', 'Title already registered!');
-    // });
+      const res = await request(app).post("/tasks/create-task").send(duplicateTaskData);
+      expect(res.statusCode).toBe(400);
+      expect(res.body).toHaveProperty('message', 'Title already registered!');
+    });
   
     it("should handle server errors gracefully", async () => {
       // Mock Task.save or other database operations to throw an error
