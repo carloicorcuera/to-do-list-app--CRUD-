@@ -1,11 +1,13 @@
 Project Name: To Do List App
 
 Description: 
-
     The project is build using Express.Js, MongoDB, Node.js, Supertest, Jest & Bootstrap also other tools/softwares used follows: Postman, Microsoft Edge, ChatGpt and also Github. The project aims to showcase basic usage of CRUD for a to do list app. 
 
-Features:
+Accessibility:
+    The application is already hosted and running following this link:
+        https://carloicorcuera.github.io/to-do-list-application/
 
+Features:
     Create Task: Adds a new task/to-do item, this includes title, author and task.
     View Tasks: An index.html is also developed to view and fetched all the tasked created in our DB.
     Update Task: The application is also capable of updating an added task in our DB.
