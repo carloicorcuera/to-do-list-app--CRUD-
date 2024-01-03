@@ -40,7 +40,7 @@ module.exports.registerTask = async (request, response) => {
 module.exports.getTasks = async (request, response) => {
     try {
         // Fetch all tasks that are active
-        const tasks = await Task.find({ isActive: true });
+        const tasks = await Task.find({ isActive: true }).sort({ createdAt: -1 });;
 
         // Check if any tasks were found
         if (tasks.length === 0) {
