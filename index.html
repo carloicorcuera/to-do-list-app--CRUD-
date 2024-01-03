@@ -60,6 +60,7 @@
                             <h5 class="card-title">${task.title}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Authored By: ${task.author}</h6>
                             <p class="card-text">${task.task}</p>
+                            <button onclick="archiveTask('${task._id}')" class="btn btn-danger">Delete</button>
                         </div>
                     </div>
                 </div>`
@@ -85,6 +86,27 @@
             currentPage = page;
             displayPage(page);
             updatePagination();
+        }
+
+        async function archiveTask(taskId) {
+            try {
+                const response = await fetch(`http://localhost:8001/tasks/delete/${taskId}`, {
+                    method: 'DELETE',
+                });
+
+                const data = await response.json();
+                
+                if(response.status === 200) {
+                    console.log(data.message); // Or any other indication
+                    allTasks = allTasks.filter(task => task._id !== taskId); // Remove task from allTasks
+                    displayPage(currentPage); // Refresh the current page display
+                    updatePagination(); // Update the pagination
+                } else {
+                    console.error('Failed to archive task:', data.message);
+                }
+            } catch (error) {
+                console.error('Error in archiving task:', error);
+            }
         }
 
         fetchAllTasks(); // Fetch all tasks when the page loads

@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "0a874fe2-b863-45ef-a93f-0ad49cbca7f2",
+		"name": "ToDoApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32084341"
+	},
+	"item": [
+		{
+			"name": "Create-Task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"newtest1\",\r\n    \"subtitle\": \"test subtitle\",\r\n    \"task\": \"test task\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8001/tasks/create-task"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"test2\",\r\n    \"subtitle\": \"test subtitle\",\r\n    \"task\": \"test task\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8001/tasks/all"
+			},
+			"response": []
+		},
+		{
+			"name": "Update-Task",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"First Task\",\r\n    \"subtitle\": \"This is my First Task\",\r\n    \"task\": \"Read more Documentations\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8001/tasks/update/6594d1446bdc71fb24999db4"
+			},
+			"response": []
+		},
+		{
+			"name": "Archive Task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8001/tasks/delete/6593c7fcdce51f58f36aba62"
+			},
+			"response": []
+		}
+	]
+}
