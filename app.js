@@ -1,5 +1,7 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
+const cors = require('cors');
+
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -18,6 +20,7 @@ mongoose.set('strictQuery', false);
 let db = mongoose.connection;
 db.once('open', () => console.log('Connected to MongoDB!'));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

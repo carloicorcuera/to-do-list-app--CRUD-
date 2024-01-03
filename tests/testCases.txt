@@ -1,0 +1,18 @@
+GET /tasks/all
+	should return 404 when no active tasks are found _ COMPLETE // Will Return Fail as the DB have already secured active tasks
+	should return tasks with the correct structure and data types _ COMPLETE	
+	should handle server errors gracefully _ COMPLETE
+POST /tasks/create-task
+	should successfully register a new task _ COMPLETE
+	should return 400 for invalid task data _ COMPLETE
+	should prevent duplicate task titles _ COMPLETE
+	should handle server errors gracefully _ COMPLETE
+PATCH /tasks/update/:id
+	should successfully update an existing task _ COMPLETE 
+	should return 404 when task is not found _ COMPLETE
+	should handle invalid update data _ COMPLETE
+	should handle server errors gracefully _ COMPLETE
+DELETE /delete/:id	
+	should successfully archive an existing task _ COMPLETE
+	should return 404 when task is not found _ COMPLETE
+	should handle server errors gracefully _ COMPLETE

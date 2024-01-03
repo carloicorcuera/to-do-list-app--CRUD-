@@ -5,9 +5,9 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: [true, "Title is required."]
   },
-  subtitle: {
+  author: {
     type: String,
-    required: [true, "Sub-title is required."]
+    required: [true, "Author is required."]
   },
   task: {
     type: String,

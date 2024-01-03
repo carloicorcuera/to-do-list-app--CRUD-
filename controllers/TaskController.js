@@ -2,10 +2,10 @@ const Task = require('../models/Task');
 
 // Create Task
 module.exports.registerTask = async (request, response) => {
-    const { title, subtitle, task } = request.body;
+    const { title, author, task } = request.body;
 
     try {
-      if (!title || !subtitle || !task) {
+      if (!title || !author || !task) {
         return response.status(400).json({ error: "Request is Empty" });
       }
     
@@ -19,8 +19,7 @@ module.exports.registerTask = async (request, response) => {
         // Business logic for user registration
         const newTask = new Task({
           title: request.body.title,
-          subtitle: request.body.subtitle,
-          task: request.body.task,
+          author: request.body.author,
           task: request.body.task,
         });
     
@@ -63,15 +62,15 @@ module.exports.getTasks = async (request, response) => {
 module.exports.updateTask = async (request, response) => {
     try {
 
-        const { title, subtitle, task } = request.body;
+        const { title, author, task } = request.body;
 
         // Extract _id and update details from request
         const taskId = request.params.id; // assuming _id is passed as URL parameter
         const updateDetails = request.body; // the details to update
 
         // Check for required fields
-        if (!title || !subtitle || !task) {
-            return response.status(400).json({ error: "Invalid input data, missing title, subtitle, or task" });
+        if (!title || !author || !task) {
+            return response.status(400).json({ error: "Invalid input data, missing title, author, or task" });
         };
 
         // Find the task by _id and update it

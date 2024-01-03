@@ -37,8 +37,8 @@ describe("GET /tasks/all", () => {
           expect(task).toHaveProperty('_id');
           expect(task).toHaveProperty('title');
           expect(typeof task.title).toBe('string');
-          expect(task).toHaveProperty('subtitle');
-          expect(typeof task.subtitle).toBe('string');
+          expect(task).toHaveProperty('author');
+          expect(typeof task.author).toBe('string');
           expect(task).toHaveProperty('task');
           expect(typeof task.task).toBe('string');
           expect(task).toHaveProperty('isActive');
@@ -71,7 +71,7 @@ describe("POST /tasks/create-task", () => {
       // Mock request data for a new task
       const newTaskData = {
         title: "Unique1 Task Title",
-        subtitle: "Unique1 Task Subtitle",
+        author: "Unique1 Task Author",
         task: "Unique1 Task description"
         // Include other necessary fields
       };
@@ -95,7 +95,7 @@ describe("POST /tasks/create-task", () => {
   
       const duplicateTaskData = {
         title: "Unique Task Title",
-        subtitle: "Task Subtitle",
+        author: "Task Author",
         task: "Task description"
         // Include other necessary fields
       };
@@ -113,7 +113,7 @@ describe("POST /tasks/create-task", () => {
   
       const taskData = {
         title: "Some Title",
-        subtitle: "Task Subtitle",
+        author: "Task Author",
         task: "Task description"
         // Include other necessary fields
       };
@@ -132,7 +132,7 @@ describe("PATCH /tasks/update/:id", () => {
       const validTaskId = '6594d1446bdc71fb24999db4';
       const updateData = {
         title: "200 Updated Task Title",
-        subtitle: "200 Updated Task Title",
+        author: "200 Updated Task Title",
         task: "200 Updated Task Title",
       };
   
@@ -146,7 +146,7 @@ describe("PATCH /tasks/update/:id", () => {
       const nonExistentTaskId = '6594d1446bdc71fb24999db1';
       const updateData = {
         title: "404 Updated Task Title",
-        subtitle: "404 Updated Task Title",
+        author: "404 Updated Task Title",
         task: "404 Updated Task Title",
       };
   
@@ -165,7 +165,7 @@ describe("PATCH /tasks/update/:id", () => {
       const res = await request(app).patch(`/tasks/update/${validTaskId}`).send(invalidUpdateData);
       // The expected status code might vary based on your implementation (could be 400 or another code)
       expect(res.statusCode).toBe(400); 
-      expect(res.body).toHaveProperty('error', 'Invalid input data, missing title, subtitle, or task');
+      expect(res.body).toHaveProperty('error', 'Invalid input data, missing title, author, or task');
     });
   
     it("should handle server errors gracefully", async () => {
@@ -177,7 +177,7 @@ describe("PATCH /tasks/update/:id", () => {
       const taskId = '6594d1446bdc71fb24999db4';
       const updateData = {
         title: "500 Updated Task Title",
-        subtitle: "500 Updated Task Title",
+        author: "500 Updated Task Title",
         task: "500 Updated Task Title",
       };
   
