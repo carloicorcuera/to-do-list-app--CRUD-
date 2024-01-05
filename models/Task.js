@@ -20,6 +20,10 @@ const taskSchema = new mongoose.Schema({
   file : {
     type: String,
     default: ""
+  },
+  imageURL: {
+    type: String,
+    default: ""
   }
 }, { timestamps: true });
 

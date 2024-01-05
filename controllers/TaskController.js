@@ -2,7 +2,7 @@ const Task = require('../models/Task');
 
 // Create Task
 module.exports.registerTask = async (request, response) => {
-    const { title, author, task } = request.body;
+    const { title, author, task, url } = request.body;
     const file = request.file;  // This is your file object from Multer
 
     try {
@@ -11,7 +11,7 @@ module.exports.registerTask = async (request, response) => {
       }
     
         // Check if email already exists in the database
-        const existingTitle = await Task.findOne({ title: request.body.title });
+        const existingTitle = await Task.findOne({ title: title });
     
         if (existingTitle) {
           return response.status(400).json({ message: "Title already registered!" });
@@ -19,11 +19,12 @@ module.exports.registerTask = async (request, response) => {
     
         // Business logic for user registration
         const newTask = new Task({
-          title: request.body.title,
-          author: request.body.author,
-          task: request.body.task,
-          file: file ? file.path : ""  // Save only the file path
-        });
+            title,
+            author,
+            task,
+            imageURL: url,
+            file: file ? file.path : ""  // Save only the file path
+          });
     
         const created_task = await newTask.save();
     
