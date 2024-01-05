@@ -12,11 +12,11 @@ const app = express();
 const port = process.env.PORT || 8008;
 const dbURL = process.env.DATABASE_URL;
 
-// MongoDB Connection
+//MongoDB Connection
 mongoose.connect(dbURL);
 
 mongoose.set('strictQuery', false);
- 
+
 let db = mongoose.connection;
 db.once('open', () => console.log('Connected to MongoDB!'));
 

@@ -3,6 +3,7 @@ const Task = require('../models/Task');
 // Create Task
 module.exports.registerTask = async (request, response) => {
     const { title, author, task } = request.body;
+    const file = request.file;  // This is your file object from Multer
 
     try {
       if (!title || !author || !task) {
@@ -21,6 +22,7 @@ module.exports.registerTask = async (request, response) => {
           title: request.body.title,
           author: request.body.author,
           task: request.body.task,
+          file: file ? file.path : ""  // Save only the file path
         });
     
         const created_task = await newTask.save();
@@ -62,21 +64,31 @@ module.exports.getTasks = async (request, response) => {
 module.exports.updateTask = async (request, response) => {
     try {
 
-        const { title, author, task } = request.body;
-
-        // Extract _id and update details from request
+        const { title, author, task } = request.body;  // Extract fields from the body
+        const file = request.file;  // Extract file object from Multer
         const taskId = request.params.id; // assuming _id is passed as URL parameter
-        const updateDetails = request.body; // the details to update
 
         // Check for required fields
-        if (!title || !author || !task) {
-            return response.status(400).json({ error: "Invalid input data, missing title, author, or task" });
+        if (!title || !author || !task ) {
+            return response.status(400).json({ error: "Invalid input data, missing title, author, file, or task" });
         };
+
+        // Prepare the update object
+        let updateDetails = {
+            title,
+            author,
+            task,
+        };
+
+        // If a new file is uploaded, add its path to the update object
+        if (file) {
+            updateDetails.file = file.path;
+        }
 
         // Find the task by _id and update it
         const updatedTask = await Task.findByIdAndUpdate(
             taskId, // MongoDB _id of the task
-            updateDetails, // update
+            updateDetails, // the details to update
             { new: true } // options: return the modified document rather than the original
         );
 

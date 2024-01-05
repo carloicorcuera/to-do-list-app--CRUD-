@@ -16,6 +16,10 @@ const taskSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
+  },
+  file : {
+    type: String,
+    default: ""
   }
 }, { timestamps: true });
 
