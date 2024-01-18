@@ -2,15 +2,20 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const cors = require('cors');
 
+
 const dotenv = require('dotenv');
+
 
 dotenv.config();
 
+
 const taskRoutes = require('./routes/taskRoutes');
+
 
 const app = express();
 const port = process.env.PORT || 8008;
 const dbURL = process.env.DATABASE_URL;
+ 
 
 //MongoDB Connection
 mongoose.connect(dbURL);
